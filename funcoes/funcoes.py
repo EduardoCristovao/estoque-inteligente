@@ -154,56 +154,6 @@ def cadastrar_produto():
     cursorbd.close()
     bd.close()
 
-#--------------------------------------------DELETAR UM PRODUTO
-
-def deletar_prod():
-    bd = sqlconectar()
-    cursorbd = bd.cursor()
-    print("-" * 40)
-    print("   D E L E T A R - P R O D U T O    ")
-    print("-" * 40)
-
-    cursorbd.execute("""SELECT produtos.nome, lotes.numero_lote, lotes.quantidade, produtos.id
-                        FROM lotes
-                        JOIN produtos ON lotes.id_produto = produtos.id
-                     """)
-    motlote = cursorbd.fetchall() #Retorna todos os registros como uma lista de tuplas.
-
-    #faço uma lista/loop e puxo todos o números
-    for vasco in motlote:
-            print("─" * 40)  # Linha separadora
-            print(f"📦 Produto: {vasco[0]}")# número do produto na tupla
-            print(f"🔢 Lote: {vasco[1]}")# número do lote na tupla
-            print(f"📦 Quantidade: {vasco[2]}")# número da quantidade na tupla
-            print(f"🆔 ID: {vasco[3]}")# número do id na tupla
-    print("─"*40)
-    print("\n")
-        
-    id_prod = input("Digite o ID ou NOME do produto que deseja excluir: ")
-    
-    if id_prod.isdigit():
-        cursorbd.execute("SELECT id FROM produtos WHERE id = %s", (int(id_prod),))
-    else:
-        cursorbd.execute("SELECT id FROM produtos WHERE nome = %s", (id_prod,))
-
-    resultado = cursorbd.fetchone()
-
-    if resultado is None:
-        print("\n\n-----❌ Produto não encontrado.-----")
-        return
-    id_produt = resultado[0]
-
-    cursorbd.execute("DELETE FROM estoque WHERE id_produto = %s", (id_produt,))
-    cursorbd.execute("DELETE FROM lotes WHERE id_produto = %s", (id_produt,))
-    cursorbd.execute("DELETE FROM produtos WHERE id = %s", (id_produt,))
-    
-    bd.commit()
-
-    print('\n\n Produto deletado com sucesso! ✅\n\n')
-
-    cursorbd.close()
-    bd.close()
-
 #--------------------------------------------MOSTRAR O PRODUTOS V2
 
 def mostrar_produtos_registrados():
@@ -420,7 +370,6 @@ def alterar_produto():
     cursorbd.close()
     bd.close()
 # ------------------------------------------ mostrar produto com produto com lote do mesmo
-
 def mostrar_produto_com_lotes():
     bd = sqlconectar()  # Conecta no banco de dados
     cursorbd = bd.cursor()  # Cria um cursor para executar comandos SQL
@@ -469,6 +418,7 @@ def mostrar_produto_com_lotes():
         
     cursorbd.close()
     bd.close()
+# ------------------------------------------ Aletar caso o produto esta abaixo de 2
 
 def alerta_validade():
     bd = sqlconectar()  # Conecta ao banco de dados (função externa que deve retornar a conexão)
@@ -506,11 +456,8 @@ def alerta_validade():
 
     cursorbd.close()  # Fecha o cursor após o uso
     bd.close()  # Fecha a conexão com o banco de dados
-'''
-while faz repetição até a expressão for verdadeira
-caso eu ja deixe ele como verdadeiro ele vai repetir infinitamente até da break
+# ------------------------------------------ deletar produto usando apenas um lote ou apenas produto
 
-'''
 def deletar_lote_ou_produto():
     bd = sqlconectar()  # Conecta ao banco de dados
     cursorbd = bd.cursor()  # Cria um cursor para executar comandos SQL
