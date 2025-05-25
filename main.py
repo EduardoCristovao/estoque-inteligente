@@ -1,4 +1,3 @@
-from funcoes.menu import *
 from funcoes.funcoes import cadastrar_produto, alterar_produto, deletar_lote_ou_produto, mostrar_produtos_registrados, mostrar_produto_com_lotes, verificar_estoque, alerta_validade
 import mysql.connector
 from datetime import datetime
