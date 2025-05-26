@@ -6,14 +6,14 @@ Ele usa o MySQL Connector para conectar e manipular o banco de dados.
 ## Como usar
 
 1. Clone o repositório:  
-
-git clone https://github.com/EduardoCristovao/estoque-inteligente.git
-
+``
+   git clone https://github.com/EduardoCristovao/estoque-inteligente.git
+``
 
 2. Instale as dependências:  
-
-pip install mysql-connector-python
-
+``
+  pip install mysql-connector-python
+``
 
 3. Configure seu banco MySQL (crie o banco e tabelas conforme seu código).
 
